@@ -1,0 +1,152 @@
+{% extends 'basic.html' %}
+{% block title %}Home - Be Customized {% endblock %}
+
+
+{% block body %}
+{% include 'messages.html' %}
+
+{% load static %}
+
+      <!-- Header Section End -->
+
+      <!-- Hero Slider Start-->
+      <div class="hero-slider section fix">
+        <!-- Hero Slide Item Start-->
+        <div class="hero-item" style="background-image: url({% static '/img/hero/1.jpg' %})">
+          <!-- Hero Content Start-->
+          <div class="hero-content text-center m-auto">
+
+            <p style="font-family: 'Arial', sans-serif; font-size: 18px; color: #ffffff; line-height: 1.6;">
+             Welcome to our Hamper and Gift project!
+              We specialize in providing a delightful array of gifting options, meticulously crafted by our talented vendors.
+              From elegant hampers to charming personalized gifts, discover the perfect tokens of affection for your loved ones.
+              Join us in creating cherished memories, one thoughtful gift at a time.
+            </p>
+
+          </div>
+          <!-- Hero Content End-->
+        </div>
+        <!-- Hero Slide Item End-->
+
+        <!-- Hero Slide Item Start-->
+        <div class="hero-item" style="background-image: url({% static '/img/hero/2.jpg' %})">
+          <!-- Hero Content Start-->
+          <div class="hero-content text-center m-auto">
+
+            <p style="font-family: 'Arial', sans-serif; font-size: 18px; color: #FFFFFF; line-height: 1.6;">
+              At our Hamper and Gift platform, we strive to redefine the art of gifting, offering a seamless experience for both vendors and users alike.
+              Our curated selection ensures that every gift is as unique as the recipient,
+              fostering moments of joy and appreciation. Explore our diverse range of offerings and embark on a journey of heartfelt gifting with us today.
+            </p>
+
+          </div>
+          <!-- Hero Content End-->
+        </div>
+        <!-- Hero Slide Item End-->
+      </div>
+      <!-- Hero Slider End-->
+
+      <!-- Banner Section Start-->
+      <div class="banner-section section pt-120">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 col-12 mb-30">
+              <div class="single-banner">
+                <img src="{% static '/img/banner/1.jpg' %}" alt="banner" />
+                <div class="banner-content right">
+                  <h1 class="white"><span>Gifts</span>Christmas</h1>
+                  <a href="/allcats" class="button">Shop Now</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-12 mb-30">
+              <div class="single-banner">
+                <img src="{% static '/img/banner/2.jpg' %}" alt="banner" />
+                <div class="banner-content left">
+                  <h2 class="black">
+                    <span class="small">Save <span class="red">25%</span></span
+                    ><span class="red">Offer</span> Christmas
+                  </h2>
+                  <a href="/allcats" class="link">Shop Now</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Banner Section End-->
+
+      <!-- Product Section Start-->
+      <div class="product-section section pt-70 pb-60">
+        <div class="container">
+          <!-- Section Title Start-->
+          <div class="row">
+            <div class="section-title text-center col mb-60">
+              <h1>Featured Products</h1>
+            </div>
+          </div>
+          <!-- Section Title End-->
+
+          <!-- Product Wrapper Start-->
+          <div class="row">
+            <!-- Product Start-->
+            {%  for cp in allprodsdata %}
+            {% if forloop.counter < 4 %}
+            <div class="col-lg-4 col-md-6 col-12 mb-60">
+              <div class="product">
+                <!-- Image Wrapper -->
+                <div class="image">
+                  <!-- Image -->
+                  <a href="/proddetails/{{cp.id}}" class="img"
+                    ><img src="/media/{{cp.Pro_image}}" alt="Product"
+                  /></a>
+                  <!-- Wishlist -->
+
+                </div>
+
+                <!-- Content -->
+                <div class="content">
+                  <!-- Head Content -->
+                  <div class="head fix">
+                    <!-- Title & Category -->
+                    <div class="title-category float-left">
+                      <h5 class="title">
+                        <a href="/proddetails/{{cp.id}}">{{cp.Pro_name}}</a>
+                      </h5>
+                      <a class="category">{{cp.Pro_Cat}}</a>
+                    </div>
+                    <!-- Price -->
+                    <div class="price float-right">
+                      <span class="new">&#8377;{{cp.Pro_price}}</span>
+                      <!-- Old Price Mockup If Need -->
+                      <!-- <span class="old">$46</span> -->
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <!-- Product End-->
+          </div>
+          <!-- Product Wrapper End-->
+        </div>
+      </div>
+      <!-- Product Section End-->
+
+      <!-- Testimonial Section Start-->
+
+
+          <div class="row">
+
+          </div>
+        </div>
+      </div>
+      <!-- Testimonial Section End-->
+
+
+
+{% endblock %}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <title>Christ - Christmas Gift Shop HTML Template</title>
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+        <!-- Google Fonts -->
+        <link
+        href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i"
+        rel="stylesheet"
+      />
+      <link
+        href="https://fonts.googleapis.com/css?family=Poppins:400,400i,700,700i"
+        rel="stylesheet"
+      />
+    
+      <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}" />
+    
+      <!-- Icon Font CSS -->
+      <link rel="stylesheet" href="{% static '/css/font-awesome.min.css' %}" />
+      <link rel="stylesheet" href="{% static '/css/ionicons.min.css' %}" />
+      <!-- Plugins CSS -->
+      <link rel="stylesheet" href="{% static '/css/plugins.css' %}" />
+      <!-- Style CSS -->
+      <link rel="stylesheet" href="{% static "/style.css" %}" />
+      <!-- Modernizer JS -->
+      <script src="{% static "/js/vendor/modernizr-2.8.3.min.js" %}"></script>
+      </head>
+<body>
+    <div
+    class="footer-section section bg-dark"
+    style="background-image: url({% static "/img/bg/footer-bg-1.svg" %})"
+  >
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <!-- Footer Top Start -->
+          <div class="footer-top section pt-80 pb-50">
+            <div class="row">
+              <!-- Footer Widget -->
+              <div class="footer-widget col-lg-4 col-md-6 col-12 mb-40">
+                <img
+                  class="footer-logo"
+                  src="{% static '/img/logo.png' %}" height="80px"
+                  alt="logo"
+                />
+                <p>
+                  We're dedicated to transforming the online shopping experience.
+                  Our platform connects vendors and users effortlessly,
+                  providing a seamless interface for browsing and purchasing.
+                  With user-friendly design and secure features,
+                  we prioritize your satisfaction and convenience.
+                  Join us today and explore the future of e-commerce.
+                </p>
+              </div>
+
+              <!-- Footer Widget -->
+              <div class="footer-widget col-lg-2 col-md-3 col-12 mb-40">
+                <h4 class="widget-title">Information</h4>
+
+                <ul>
+                  <li><a href="/about">About us</a></li>
+                  <li><a href="/allprods">All Products</a></li>
+                  {% if not Vendor %}
+                  <li><a href="/contact">Contact us</a></li>
+                  {% else %}
+                  {% endif %}
+                </ul>
+              </div>
+
+              <!-- Footer Widget -->
+              {% if request.session.log_user %}
+                {% if not Vendor %}
+
+              <div class="footer-widget col-lg-2 col-md-3 col-12 mb-40">
+                <h4 class="widget-title">Categories</h4>
+
+                <ul>
+                  <li><a href="/allcats">All catagories</a></li>
+                  <li><a href="/catwiseprods/1">Birthday</a></li>
+                  <li><a href="/catwiseprods/2">Christmas</a></li>
+                  <li><a href="/catwiseprods/3">New year</a></li>
+                  <li><a href="/catwiseprods/4">Wedding</a></li>
+                </ul>
+              </div>
+                {% else %}
+                {% endif %}
+              {% endif %}
+
+
+              <!-- Footer Widget -->
+              <div class="footer-widget col-lg-4 col-md-6 col-12 mb-40">
+                <h4 class="widget-title">Contact Us</h4>
+
+                <ul>
+                  <li>
+                    <span>Address:</span>Minakshi Complex, Near Alpha one Mall, Ahmedabad.
+                  </li>
+                  <li>
+                    <span>Phone:</span> +91 8989898989
+                  </li>
+
+                  <li><span>Email:</span> contact@gmail.com</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="{% static "/js/vendor/jquery-1.12.0.min.js" %}"></script>
+  <!-- Popper JS -->
+  <script src="{% static '/js/popper.min.js' %}"></script>
+  <!-- Bootstrap JS -->
+  <script src="{% static '/js/bootstrap.min.js' %}"></script>
+  <!-- Plugins JS -->
+  <script src="{% static '/js/plugins.js' %}"></script>
+  <!-- Ajax Mail JS -->
+  <script src="{% static '/js/ajax-mail.js' %}"></script>
+  <!-- Main JS -->
+  <script src="{% static '/js/main.js' %}"></script>
+</body>
+</html>

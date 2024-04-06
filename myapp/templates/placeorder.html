@@ -1,0 +1,77 @@
+{% extends 'basic.html' %}
+{% block title %}Order Placed - Be Customized {% endblock %}
+
+
+{% block body %}
+{% include 'messages.html' %}
+
+{% load static %}
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/css/star-rating.min.css" />
+
+
+    <div
+        class="page-banner-section section"
+        style="background-image: url({% static 'img/bg/page-banner.jpg' %})"
+      >
+        <div class="container">
+          <div class="row">
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+              <h1>Order Placed</h1>
+            </div>
+            <!-- Page Title End -->
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-section section bg-white pt-120" >
+        <div class="container" style="width:60%; margin-bottom:300px;">
+          <div class="colorlib-product">
+		<div class="container">
+			<div class="row row-pb-lg">
+				<div class="col-sm-10 offset-md-1">
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-10 offset-sm-1 text-center">
+					<p class="icon-addcart"><span><i class="icon-check"></i></span></p>
+					<h2 class="mb-4">Thank you for purchasing, Your order is completed.</h2>
+
+				</div>
+			</div>
+		</div>
+		<form action="/submitreview" method="post" enctype="multipart/form-data" class="contact-form">
+			{% csrf_token %}
+			<div class="row">
+				<div class="col-sm-10 offset-sm-1 text-center">
+					<h2>Rate your Experience with us</h2>
+					<br />
+					<input id="input-1" name="input-1" class="rating rating-loading" data-min="0" data-max="5"
+						data-step="1">
+					<br />
+				</div>
+
+				<div class="col-md-4"></div>
+
+				<div class="col-md-4 text-center">
+					<label for="feedback">Write Your Review:</label>
+					<input type="text" name="feedback" id="feedback" class="form-control">
+					<br />
+					<button class="btn btn-primary btn-outline-primary">Submit Review</button>
+				</div>
+			</div>
+	</div>
+        </div>
+      </div>
+
+
+    {% endblock %}
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/js/star-rating.min.js"></script>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'basic.html' %}
+{% block title %}Order Details - Be Customized {% endblock %}
+
+
+{% block body %}
+{% include 'messages.html' %}
+
+{% load static %}
+<div
+        class="page-banner-section section"
+        style="background-image: url({% static 'img/bg/page-banner.jpg' %})"
+      >
+        <div class="container">
+          <div class="row">
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+              <h1>Order Details</h1>
+            </div>
+            <!-- Page Title End -->
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Cart Section Start-->
+      <div class="cart-section section pt-120 pb-90">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <div class="table-responsive mb-30">
+                <table class="table cart-table text-center">
+                  <!-- Table Head -->
+                  <thead>
+                    <tr>
+                      <th class="number">#</th>
+                      <th class="qty">Product</th>
+                      <th class="qty">Price</th>
+                      <th class="price">Quantity</th>
+                      <th class="price">Final Price</th>
+                    </tr>
+                  </thead>
+
+                  <!-- Table Body -->
+                  <tbody>
+                  {% for c in cartdetail %}
+                    <tr>
+                      <td style="padding:10px;"><span class="cart-number">{{forloop.counter}}</span></td>
+                      <td style="padding:10px;"><p class="cart-pro-price">{{c.Product_id.Pro_name}}</p></td>
+                      <td style="padding:10px;"><p class="cart-pro-price">{{c.Price}}</p></td>
+                      <td style="padding:10px;"><p class="cart-pro-price">{{c.Quantity}}</p></td>
+                      <td style="padding:10px;"><p class="cart-price-total">{{c.Final_price}}</p></td>
+                    </tr>
+                   {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Cart Section End-->
+
+
+    {% endblock %}
+
+{% block js %}
+
+{% endblock %}

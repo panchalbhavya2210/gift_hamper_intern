@@ -1,0 +1,72 @@
+{% extends 'basic.html' %}
+{% block title %}Edit Profile - Be Customized {% endblock %}
+
+
+{% block body %}
+{% include 'messages.html' %}
+
+{% load static %}
+
+      <div class="contact-section section bg-white pt-120" >
+        <div class="container" style="width:60%; margin-bottom:300px;">
+          <div class="row">
+            <div class="col-xl-10 col-10 ml-auto mr-auto">
+              <div class="contact-wrapper">
+                <div class="row">
+                  <div class="contact-form col-lg-12 col-12">
+                    <h4 class="title">Edit Your Profile</h4>
+                    <form id="contact-forms"
+                      action="/updateprofile" method="post" enctype="multipart/form-data"> {% csrf_token %}
+                      <img src="{{userdata.dp.url}}" alt="" width="50%" style="width: 40%; margin: 0 auto;"><br>
+                      <label for="profile_pic">Profile Picture:</label>
+                      <input type="file" class="form-control" name="profile" id="profile_pic">
+
+                      <input type="text" name="name" placeholder="Your Name" value="{{userdata.Name}}"  required/>
+                      <input
+                        type="email"
+                        name="email"
+                        value="{{userdata.Email}}"
+                      />
+                      <input
+                        type="tel"
+                        name="phone"
+                        placeholder="Your Phone"
+                        value="{{userdata.Phone}}"
+                        pattern="[6789][0-9]{9}"
+                        required
+                      />
+
+                      <label>Date of birth:</label>
+                        <input
+                        type="date"
+                        name="dob"
+                        placeholder="Your DOB"
+                        id="dateInput"
+                        required
+                      />
+
+                      <input
+                        name="address"
+                        placeholder="Your Address"
+                        value="{{userdata.Address}}"
+                      >
+                      <input type="submit" value="Submit" />
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    {% endblock %}
+
+{% block js %}
+<script>
+    var dob = '{{ userdata.Dob|date:"Y-m-d" }}';
+    document.getElementById('dateInput').value = dob;
+</script>
+{% endblock %}

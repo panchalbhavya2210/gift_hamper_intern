@@ -1,0 +1,106 @@
+{% extends 'basic.html' %}
+{% block title %}Add Product - Be Customized {% endblock %}
+
+
+{% block body %}
+{% include 'messages.html' %}
+
+{% load static %}
+<div
+        class="page-banner-section section"
+        style="background-image: url({% static 'img/bg/page-banner.jpg' %})"
+      >
+        <div class="container">
+          <div class="row">
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+              <h1>Add Product / Hamper</h1>
+            </div>
+            <!-- Page Title End -->
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-section section bg-white pt-120" >
+        <div class="container" style="width:80%; margin-bottom:300px;">
+          <div class="row">
+            <div class="col-xl-12 col-12 ml-auto mr-auto">
+              <div class="contact-wrapper">
+                <div class="row">
+                    {% if userdata.is_verified %}
+                  <div class="contact-form col-lg-6 col-12">
+                    <h4 class="title">Add Product</h4>
+                    <form
+                      action="/addproduct"
+                      method="post" enctype="multipart/form-data"
+                    >{% csrf_token %}
+                      <input type="text" name="name" placeholder="Product Name" />
+                      <input
+                        type="text"
+                        name="price"
+                        placeholder="Product Price"
+                      />
+                      <textarea
+                        name="pdesc"
+                        placeholder="Product Description"
+                      ></textarea>
+                      <label>Picture:</label>
+                        <input
+                        type="file"
+                        name="photo"
+                        accept="image/*"
+                        style="padding:3px;"
+                        required
+                      />
+                      <label>Category:</label>
+                        <select id="pcat" name="pcat" class="form-control mb-2">
+                          {% for pd in productcatdata %}
+                          <option value="{{pd.id}}">{{pd.Product_category_name}}</option>
+                          {% endfor %}
+
+                        </select>
+                      <input type="submit" value="Submit" />
+                    </form>
+                  </div>
+                  <div class="contact-form col-lg-6 col-12">
+                    <h4 class="title">Add Hamper</h4>
+                    <form
+                      action="/addhamper"
+                      method="post" enctype="multipart/form-data"
+                    >{% csrf_token %}
+                      <input type="text" name="name" placeholder="Hamper name" />
+                      <input
+                        type="text"
+                        name="price"
+                        placeholder="Hamper Price"
+                      />
+                      <label>Picture:</label>
+                        <input
+                        type="file"
+                        name="photo"
+                        accept="image/*"
+                        style="padding:3px;"
+                        required
+                      />
+                      <input type="submit" value="Submit" />
+                    </form>
+                    <p class="form-messege"></p>
+                  </div>
+                    {% else %}
+                    <div class=" col-lg-12 col-12">
+                      <h2 class="title" style="color:red;">Your Account is not verified yet. Please contact admin.</h2>
+                    </div>
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    {% endblock %}
+
+{% block js %}
+
+{% endblock %}

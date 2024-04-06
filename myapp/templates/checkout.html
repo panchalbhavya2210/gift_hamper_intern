@@ -1,0 +1,238 @@
+{% extends 'basic.html' %}
+{% block title %}Checkout - Be Customized {% endblock %}
+
+
+{% block body %}
+{% include 'messages.html' %}
+
+{% load static %}
+<div
+        class="page-banner-section section"
+        style="background-image: url({% static 'img/bg/page-banner.jpg' %})"
+      >
+        <div class="container">
+          <div class="row">
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+              <h1>Cart</h1>
+            </div>
+            <!-- Page Title End -->
+          </div>
+        </div>
+      </div>
+
+    <!-- Checkout Section Start-->
+    <div class="cart-section section pt-120 pb-90">
+        <div class="container">
+            <form action="/placeorder" id="placeOrderForm" method="post" enctype="multipart/form-data"> {% csrf_token %}
+            <div class="row">
+
+                <div class="col-lg-6 col-12 mb-30">
+                   
+                    <!-- Checkout Accordion Start -->
+                    <div id="checkout-accordion" class="panel-group">
+
+                        <!-- Billing Method -->
+                        <div class="panel single-accordion">
+                            <a class="accordion-head collapsed" data-toggle="collapse" data-parent="#checkout-accordion" href="#billing-method">Billing informatioon</a>
+                            <div id="billing-method" class="collapse">
+                                <div class="accordion-body billing-method fix">
+                                   
+                                    <div action="#" class="billing-form checkout-form">
+                                        <div class="row">
+
+                                            <div class="col-12 mb-20">								
+                                                <input type="text" value="{{userdata.Name}}">
+                                            </div>
+                                            <div class="col-12 mb-20">
+                                                <input placeholder="Address" name="saddress" value="{{userdata.Address}}">
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-20">									
+                                                <input type="email" value="{{userdata.Email}}">
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-20">									
+                                                <input value="{{userdata.Phone}}" type="text">
+                                            </div>							
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        
+                        <!-- Payment Method -->
+                        <div class="panel single-accordion">
+                            <a class="accordion-head collapsed" data-toggle="collapse" data-parent="#checkout-accordion" href="#payment-method">Payment method</a>
+                            <div id="payment-method" class="collapse">
+                                <div class="accordion-body payment-method fix">
+
+                                    <ul class="payment-method-list">
+
+                                        <input type="radio" name="paymentMethod" id="creditDebitCard" value="creditDebitCard">
+                                        <label for="creditDebitCard" onclick="toggleCreditCardForm()" style="margin-right:10px;">Credit/Debit card</label>
+
+                                        <input type="radio" name="paymentMethod" id="cashOnDelivery" value="cashOnDelivery" checked>
+                                        <label for="cashOnDelivery">Cash on delivery</label>
+                                    </ul>
+                                    
+                                    <div class="payment-form credit-card-form" id="creditCardForm">
+                                        <div class="row">
+                                            <div class="input-box col-12 mb-20">
+                                                <label for="card-name">Name on Card *</label>
+                                                <input type="text" name="cname" id="card-name" />
+                                            </div>
+
+                                            <div class="input-box col-12 mb-20">
+                                                <label for="card-number">Credit Card Number *</label>
+                                                <input type="text" name="cnumber" id="card-number" />
+                                            </div>
+                                            <div class="input-box col-12">
+                                                <div class="row">
+                                                    <div class="input-box col-12">
+                                                        <label>Expiration Date</label>
+                                                    </div>
+                                                    <div class="input-box col-md-6 col-12 mb-20">
+                                                        <select name="month">
+                                                            <option>Month</option>
+                                                            <option>Jan</option>
+                                                            <option>Feb</option>
+                                                            <option>Mar</option>
+                                                            <option>Apr</option>
+                                                            <option>May</option>
+                                                            <option>Jun</option>
+                                                            <option>Jul</option>
+                                                            <option>Aug</option>
+                                                            <option>Sep</option>
+                                                            <option>Oct</option>
+                                                            <option>Nov</option>
+                                                            <option>Dec</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="input-box col-md-6 col-12 mb-20">
+                                                        <select name="year">
+                                                            <option>Year</option>
+                                                            <option>2021</option>
+                                                            <option>2022</option>
+                                                            <option>2023</option>
+                                                            <option>2024</option>
+                                                            <option>2025</option>
+                                                            <option>2026</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="input-box col-12">
+                                                <label for="card-Verify">Card Verification Number(CVV) *</label>
+                                                <input type="text" name="cvv" id="card-Verify" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div><!-- Checkout Accordion Start -->
+                    
+                </div>
+                
+                <!-- Order Details -->
+                <div class="col-lg-6 col-12 mb-30">
+                   
+                    <div class="order-details-wrapper">
+                        <h2>your order</h2>
+                        <div class="order-details">
+
+                                <ul>
+                                    <li><p class="strong">product</p><p class="strong">total</p></li>
+                                    {% for ci in cartitems %}
+                                    <li><p>{{ci.Product_name}} x{{ci.Quantity}}</p><p>₹{{ci.Final_price}}</p></li>
+                                    {% endfor %}
+                                    <li><p class="strong">cart subtotal</p><p class="strong">₹{{carttotal}}</p></li>
+                                    <li><p class="strong">hamper price</p><p class="strong">₹{{subtotal}}</p></li>
+                                    <li><p class="strong">shipping</p><p>
+                                        Free Shipping
+                                    </p></li>
+                                    <input type="hidden" name="hamperid" value="{{selectedHamperId}}">
+                                    <input type="hidden" name="grandtotal" value="{{grandTotal}}">
+
+                                    <li><p class="strong">order total</p><p class="strong">₹{{grandTotal}}</p></li>
+                                    <li><button type="submit" class="button">place order</button></li>
+                                </ul>
+
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+                </form>
+        </div>
+    </div><!-- Checkout Section End-->
+
+{% endblock %}
+
+{% block js %}
+
+<script>
+    // Your existing script
+
+    function toggleCreditCardForm() {
+      var creditCardForm = document.getElementById('creditCardForm');
+      var cashOnDelivery = document.getElementById('cashOnDelivery');
+
+      if (creditCardForm.style.display === 'none') {
+        creditCardForm.style.display = 'block';
+        cashOnDelivery.checked = false; // Uncheck cash on delivery
+      } else {
+        creditCardForm.style.display = 'none';
+      }
+    }
+
+    function validateCreditCardDetails() {
+      var paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+      if (paymentMethod && paymentMethod.value === 'creditDebitCard') {
+        var cardNumber = document.getElementById('card-number').value;
+        var expiryMonth = document.getElementsByName('month')[0].value;
+        var expiryYear = document.getElementsByName('year')[0].value;
+        var cvv = document.getElementById('card-Verify').value;
+
+        // Check if the card details are filled
+        if (!cardNumber || !expiryMonth || !expiryYear || !cvv) {
+          alert("Please fill in all the credit card details.");
+          return false;
+        }
+
+        // Example pre-defined card details for validation
+        var validCardNumber = "1234567812345678";
+        var validExpiryMonth = "Dec";
+        var validExpiryYear = "2025";
+        var validCVV = "123";
+
+        if (cardNumber === validCardNumber &&
+            expiryMonth === validExpiryMonth &&
+            expiryYear === validExpiryYear &&
+            cvv === validCVV) {
+          // Valid card details, continue with form submission
+          return true;
+        } else {
+          // Invalid card details, show alert and prevent form submission
+          alert("Invalid card details. Please check your card information.");
+          return false;
+        }
+      }
+      // If payment method is not credit/debit card, allow form submission
+      return true;
+    }
+
+    document.getElementById('placeOrderForm').addEventListener('submit', function (event) {
+      if (!validateCreditCardDetails()) {
+        event.preventDefault(); // Prevent form submission if validation fails
+      }
+    });
+</script>
+
+{% endblock %}

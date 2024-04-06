@@ -1,0 +1,101 @@
+{% extends 'basic.html' %}
+{% block title %}Product Details - Be Customized {% endblock %}
+
+
+{% block body %}
+{% include 'messages.html' %}
+
+{% load static %}
+<div
+        class="page-banner-section section"
+        style="background-image: url({% static 'img/bg/page-banner.jpg' %})"
+      >
+        <div class="container">
+          <div class="row">
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+              <h1>Product Details</h1>
+            </div>
+            <!-- Page Title End -->
+          </div>
+        </div>
+      </div>
+
+
+    <!-- Product Section Start-->
+    <div class="product-section section pt-110 pb-90">
+        <div class="container">
+
+            <!-- Product Wrapper Start-->
+            <div class="row">
+
+                <!-- Product Image & Thumbnail Start -->
+                <div class="col-lg-6 col-12 mb-30">
+
+                    <!-- Product Image -->
+                    <div class="single-product-image product-image-slider fix">
+                        <div class="single-image"><img src="/media/{{proddetaildata.Pro_image}}" height="450px" alt=""></div>
+                    </div>
+
+                </div><!-- Product Image & Thumbnail End -->
+
+                <!-- Product Content Start -->
+                <div class="single-product-content col-lg-6 col-12 mb-30">
+                    <form id="contact-forms"
+                      action="/addtocart" method="post" enctype="multipart/form-data"
+                    > {% csrf_token %}
+                    <!-- Title -->
+                    <h1 class="title">{{proddetaildata.Pro_name}}</h1>
+                    <span style="margin-bottom:15px;">{{proddetaildata.Pro_Cat}}</span>
+                    <br>
+                    <!-- Price -->
+                    <span class="product-price">&#8377;{{proddetaildata.Pro_price}}</span>
+                    <br>
+                    <!-- Description -->
+                    <div class="description">
+                        <p>{{proddetaildata.Pro_description}}</p>
+                    </div>
+
+                    <input type="hidden" name="pid" value="{{proddetaildata.id}}">
+                    <input type="hidden" name="pname" value="{{proddetaildata.Pro_name}}">
+                    <input type="hidden" name="price" value="{{proddetaildata.Pro_price}}">
+                    <!-- Quantity & Cart Button -->
+                        {% if not Vendor %}
+                    <div class="product-quantity-cart fix">
+
+                        <div class="product-quantity">
+                            <input type="text" value="0" name="qtybox">
+                        </div>
+
+                        <button class="add-to-cart" type="submit">add to cart</button>
+
+                    </div>
+                        {% endif %}
+                    </form>
+                    <!-- Action Button -->
+                    <div class="product-action-button fix">
+                        <button><i class="ion-ios-email-outline"></i>Email to a friend</button>
+                        {% if not Vendor %}
+                        <button><i class="ion-ios-heart-outline"></i>Wishlist</button>
+                        {% else %}
+                        {% endif %}
+                        <button><i class="ion-ios-printer-outline"></i>Print</button>
+                    </div>
+
+                    <!-- Social Share -->
+
+                </div><!-- Product Content End -->
+
+            </div><!-- Product Wrapper End-->
+
+            <!-- Product Additional Info Start-->
+
+
+        </div>
+    </div><!-- Product Section End-->
+
+    {% endblock %}
+
+{% block js %}
+
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'basic.html' %}
+{% block title %}About - Be Customized {% endblock %}
+
+
+{% block body %}
+{% include 'messages.html' %}
+
+{% load static %}
+<div
+        class="page-banner-section section"
+        style="background-image: url({% static 'img/bg/page-banner.jpg' %})"
+      >
+        <div class="container">
+          <div class="row">
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+              <h1>About</h1>
+            </div>
+            <!-- Page Title End -->
+          </div>
+        </div>
+      </div>
+      <!-- About Section Start-->
+      <div class="about-section section pt-120 pb-90">
+        <div class="container">
+          <div class="row flex-row-reverse">
+            <!-- About Image -->
+            <div class="about-image col-lg-6 col-12 mb-30">
+              <a
+                class="video-popup"
+                href="https://www.youtube.com/watch?v=7e90gBu4pas"
+                ><img src="{% static 'img/about.jpg' %}" alt=""
+              /></a>
+            </div>
+
+            <!-- Mission Content -->
+            <div class="about-content col-lg-6 col-12 mb-30">
+              <h2>About <span>Christ</span></h2>
+              <p>
+                We're dedicated to transforming the online shopping experience.
+                Our platform connects vendors and users effortlessly,
+                providing a seamless interface for browsing and purchasing.
+                With user-friendly design and secure features,
+                we prioritize your satisfaction and convenience.
+                Join us today and explore the future of e-commerce.
+              </p>
+              <a href="/allcats" class="button">Shop Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- About Section End-->
+
+      <!-- Team Section Start-->
+
+      <!-- Team Section End-->
+
+      <!-- Funfact Section Start-->
+      <div class="funfact-section section pb-90">
+        <div class="container">
+          <div class="row">
+            <!-- Single Fact -->
+            <div class="single-fact text-center col-sm-3 col-6 mb-30">
+              <div class="wrap">
+                <i class="fa fa-users"></i>
+                <h2 class="counter">110</h2>
+                <p>Happy Clients</p>
+              </div>
+            </div>
+
+            <!-- Single Fact -->
+            <div class="single-fact text-center col-sm-3 col-6 mb-30">
+              <div class="wrap">
+                <i class="fa fa-trophy"></i>
+                <h2 class="counter">90</h2>
+                <p>Award Winning</p>
+              </div>
+            </div>
+
+            <!-- Single Fact -->
+            <div class="single-fact text-center col-sm-3 col-6 mb-30">
+              <div class="wrap">
+                <i class="fa fa-thumbs-up"></i>
+                <h2 class="counter">230</h2>
+                <p>Project Done</p>
+              </div>
+            </div>
+
+            <!-- Single Fact -->
+            <div class="single-fact text-center col-sm-3 col-6 mb-30">
+              <div class="wrap">
+                <i class="fa fa-coffee"></i>
+                <h2 class="counter">350</h2>
+                <p>Cups of Coffee</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Funfact Section End-->
+
+      <!-- Client Section Start-->
+      <div class="client-section section pb-90">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="client-slider text-center">
+                <!-- Single Client -->
+                <div class="single-client">
+                  <img src="{% static 'img/client/1.png' %}" alt="client" />
+                </div>
+                <div class="single-client">
+                  <img src="{% static 'img/client/2.png' %}" alt="client" />
+                </div>
+                <div class="single-client">
+                  <img src="{% static 'img/client/3.png' %}" alt="client" />
+                </div>
+                <div class="single-client">
+                  <img src="{% static 'img/client/4.png' %}" alt="client" />
+                </div>
+                <div class="single-client">
+                  <img src="{% static 'img/client/5.png' %}" alt="client" />
+                </div>
+                <div class="single-client">
+                  <img src="{% static 'img/client/6.png' %}" alt="client" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Client Section End-->
+
+      {% endblock %}
