@@ -3901,22 +3901,15 @@ textarea:-ms-input-placeholder {
 /*-- Contact Wrapper --*/
 .contact-wrapper {
   background-color: #ffffff;
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 70px;
   margin: 0 30px;
   position: relative;
   z-index: 9;
 }
 @media only screen and (max-width: 767px) {
-  .contact-wrapper {
-    margin: 0 0 120px;
-  }
+ 
 }
 @media only screen and (max-width: 479px) {
-  .contact-wrapper {
-    padding: 40px;
-  }
+  
 }
 
 /*-- Contact Info --*/
@@ -3967,6 +3960,7 @@ textarea:-ms-input-placeholder {
   padding-left: 90px;
 } */
 .contact-form::before {
+  display: none;
   position: absolute;
   left: 30px;
   top: 0;
