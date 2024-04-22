@@ -6,6 +6,158 @@
 {% include 'messages.html' %}
 
 {% load static %}
+
+<style>
+     .contact-form {
+            text-align: left;
+            max-width: 300px;
+            border-radius: 8px;
+        }
+        .contact-form::before {
+          display: none;
+        }
+        
+        .contact-form h4 {
+            margin-bottom: 15px;
+        }
+    
+        .contact-form textarea {
+            margin-bottom: 15px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    
+        .contact-form .inputTypeField[type="submit"] {
+            background-color: #4CAF50;
+            color: rgb(0, 0, 0);
+            cursor: pointer;
+            border: 1px solid #000;
+            margin-top: 10px;
+        }
+    
+        .contact-form .inputTypeField[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    
+        .form-message {
+            margin-top: 15px;
+        }
+        .hidden {
+          opacity: 0;
+        }
+        .contact-form form input[type="radio"] {
+          width: 15px;
+          height: 15px;
+        }
+      
+    /* Hide the radio buttons */
+        .rating input[type="radio"] {
+            display: none;
+        }   
+        
+        .rating .star {
+            font-size: 24px; 
+            color: #ccc; 
+            cursor: pointer;
+        }
+        
+        .rating input[type="radio"]:checked ~ .star {
+            color: gold; 
+        }
+    
+        .rating {
+            font-size: 24px;
+            display: flex;
+            justify-content: flex-end;
+            flex-direction: row-reverse;
+        }
+        .star {
+            cursor: pointer;
+        }
+        .star.selected {
+            color: gold; 
+        }
+        .user_image {
+            width: 50px;
+            height: 50px;
+            object-fit:cover;
+            border-radius: 100%;
+        }
+        .imgUserDet {
+            width: 100%;
+            display: flex;
+            margin: 10px 0;
+        }
+        .imgUserDet span{
+            margin-left: 10px;
+        }
+        .flex_rev_img {
+    display: flex;
+    flex-direction: row;
+    margin: 15px 0;
+    width: 100%; /* Adjusted width for better responsiveness */
+    overflow-x: auto; /* Horizontal scroll if needed */
+}
+
+.flex_rev_img img {
+    max-width: 100%; /* Ensures images don't stretch beyond their original dimensions */
+    height: auto; /* Maintains aspect ratio */
+    object-fit: cover;
+}
+
+        .rev_comment {
+            width: 115%;
+        }
+        .rev_image:nth-child(1) {
+            margin: 0;
+        }
+        .rev_image {
+            margin: 0 10px;
+            width: 100px;
+            height: 100px;
+        }
+        .caption {
+            display: none;
+        }
+        .star-rating {
+            display: flex;
+            gap: 5px;
+        }
+        .star-rating input[type="radio"] {
+            display: none;
+        }
+        .star-rating label {
+            font-size: 30px;
+            cursor: pointer;
+            color: #ccc;
+        }
+        .yellow-star {
+            width: 25px;
+            height: 25px;
+            margin-bottom: 10px;
+        }
+        .no-padding {
+            padding: 0 !important;
+        }
+        .rev_title {
+            word-wrap: break-word;
+        }
+        .rev_disp {
+            width: 200%;   
+        }
+        .widthFull {
+          width: 100%;
+          margin-left: 30px;
+        }
+        @media only screen and (max-width: 768px) {
+        .rev_disp {
+            width: 100%; /* Adjust width for smaller screens */
+            margin-left: 10px;
+        }
+   
+}
+</style>
 <div
         class="page-banner-section section"
         style="background-image: url({% static 'img/bg/page-banner.jpg' %})"
@@ -92,6 +244,367 @@
 
 
         </div>
+        <div class="pro-info-tab tab-pane active widthFull" id="reviews">
+            <div class="contact-form no-padding">
+               <form class="review_form" action="{% url 'submit_rate' proddetaildata.id %}" method="post" enctype="multipart/form-data"> {% csrf_token %}
+
+                   <label for="review_name"> Review</label>
+                   <input type="text" id="review_name" name="review_name" placeholder="Add your review" />
+                  
+                   <label for="cmnt">Comment</label>
+                   <textarea type="text" name="cmnt" id="cmnt" placeholder="Add your comment"></textarea>
+
+                   <label for="rating">Ratings</label>
+                   
+                   <div class="rating">
+                    {% comment %} yaha hai bhai {% endcomment %}
+                       <div class="star-rating">
+                           <input type="radio" id="rating1" name="rating" value="1">
+                           <label for="rating1">★</label>
+                           <input type="radio" id="rating2" name="rating" value="2">
+                           <label for="rating2">★</label>
+                           <input type="radio" id="rating3" name="rating" value="3">
+                           <label for="rating3">★</label>
+                           <input type="radio" id="rating4" name="rating" value="4">
+                           <label for="rating4">★</label>
+                           <input type="radio" id="rating5" name="rating" value="5">
+                           <label for="rating5">★</label>
+                           <input type="hidden" id="hidden-rating" name="hidden-rating" value="">
+                       </div>
+                   </div>
+                   
+
+                   <script>
+                      const ratings = document.querySelectorAll('.star-rating input[type="radio"]');
+                      const hiddenInput = document.getElementById('hidden-rating');
+
+                       ratings.forEach((rating, index) => {
+                           rating.addEventListener('click', () => {
+                               hiddenInput.value = rating.value;
+                               for (let i = 0; i <= index; i++) {
+                                   ratings[i].nextElementSibling.style.color = '#ffcc00';
+                               }
+                               for (let i = index + 1; i < ratings.length; i++) {
+                                   ratings[i].nextElementSibling.style.color = '#ccc';
+                               }
+                           });
+                       });
+                       </script>
+               
+                   </select>
+                   <label for="productimage">Product Image</label>
+                   <input type="file" name="f_image" id="f_image" accept="image/*">
+       
+                   <input type="submit" class="btnSub" value="Submit" >
+               </form>
+               <p class="form-message"></p>
+               <div class="rev_disp">
+               {% for review in prod_rev_data %}
+              
+               <h4 class="rev_title">{{ review.review_name }}</h4>
+               
+               {%if review.rating == 1%}
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#ebdb34"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#808080"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#808080"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#808080"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#808080"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               {%elif review.rating == 2%}
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#ebdb34"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#ebdb34"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#808080"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#808080"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#808080"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               {%elif review.rating == 3%}
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#ebdb34"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#ebdb34"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#ebdb34"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#808080"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#808080"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               {%elif review.rating == 4%}
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#ebdb34"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#ebdb34"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#ebdb34"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#ebdb34"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#808080"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+               </svg>
+               {%elif review.rating == 5%}
+               <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#ebdb34"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+           </svg>
+           <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#ebdb34"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+           </svg>
+           <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#ebdb34"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               /> 
+           </svg>
+           <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#ebdb34"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+           </svg>
+           <svg
+               class="yellow-star"
+               aria-hidden="true"
+               xmlns="http://www.w3.org/2000/svg"
+               fill="#ebdb34"
+               viewBox="0 0 22 20"
+             >
+               <path
+                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+               />
+           </svg>
+               {%endif%}
+               
+               <!-- Display images associated with the review -->
+               <p>img source {{review.rev_image}}</p>
+
+               <div class="flex_rev_img">
+                   <img src="/media/{{ review.rev_image }}" class="rev_image" alt="Feedback Image">
+           </div>
+
+               <p class="rev_comment">{{ review.comment }}</p>
+
+               {% endfor %}
+           
+           
+               <div class="hidden alert alert-warning" id="warnBlock" role="alert">
+                 <p id="alertUser"></p>
+               </div>
+            </div>
+           </div>
+       </div>
+       
+   </div>
     </div><!-- Product Section End-->
 
     {% endblock %}

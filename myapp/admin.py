@@ -9,6 +9,7 @@ from .models import (
     contact,
     FEEDBACK_TABLE,
     hamper_feedback,
+    product_review
 )
 
 # Register your models here.
@@ -58,3 +59,7 @@ class FeedbackTableAdmin(admin.ModelAdmin):
 class HamperFeedbackAdmin(admin.ModelAdmin):
     list_display = ('L_id', 'Hamper_id', 'COMMENT', 'Date_time')
     search_fields = ['L_id__Name', 'Hamper_id__hamper_name']
+    
+@admin.register(product_review)
+class ProductReview(admin.ModelAdmin):
+    list_display = ('review_name','user_id','p_id','comment','rating', 'rev_image','submit_on')

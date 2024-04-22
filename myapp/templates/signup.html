@@ -106,13 +106,13 @@
 
     // Check if password meets the criteria
     var passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
     if (!passwordRegex.test(passwordField)) {
       alert(
         "Password should be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character."
       );
-      return true;
+      return false;
     }
 
     return true;

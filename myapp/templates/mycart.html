@@ -110,7 +110,14 @@
                   <h4 class="title">Process Checkout</h4>
                   <p><span>Subtotal</span><span id="subtotal">₹ 00</span></p>
                   <h5><span>Grand total</span><span id="grandTotal">₹ {{carttotal}}</span></h5>
-                  <button class="button">process to checkout</button>
+                  {% if cartitems %}
+  <!-- If cart is not empty -->
+  <button class="button">process to checkout</button>
+{% else %}
+  <!-- If cart is empty -->
+  <button class="button" disabled>process to checkout</button>
+{% endif %}
+
                   </form>
                 </div>
               </div>

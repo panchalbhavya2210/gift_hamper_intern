@@ -11,7 +11,7 @@ from django.db.models import Count
 from django.db.models import Q
 from django.db.models import Sum
 from django.contrib import messages
-from django.db.models.functions import Random
+from django.db.models.functions import Random # type: ignore
 
 # Create your views here.
 
@@ -240,7 +240,7 @@ def checklogin(request):
         try:
             user = login_table.objects.get(Email=username, Password=password)
             request.session['log_user'] = user.Email
-            request.session['log_id'] = user.id
+            request.session['log_id'] = user.id # type: ignore
             request.session.save()
 
         except login_table.DoesNotExist:
@@ -750,19 +750,27 @@ def proddetails(request, pdid):
             print(userdata.usertype)
 
         proddetaildata = product_detail.objects.get(id=pdid)
+        prod_rev_data = product_review.objects.get(id=pdid)
+        print(prod_rev_data)
 
+    
         details = {
             'userdata': userdata,
             'Vendor': Vendor,
             'proddetaildata': proddetaildata,
+            'prod_rev_data' : prod_rev_data
         }
         return render(request, 'proddetails.html', details)
     except:
         pass
     proddetaildata = product_detail.objects.get(id=pdid)
+    prod_rev_data = product_review.objects.filter(p_id=pdid)
+    print(pdid)
+    print(prod_rev_data)
 
     details = {
         'proddetaildata': proddetaildata,
+        'prod_rev_data' : prod_rev_data
     }
     return render(request, 'proddetails.html', details)
 
@@ -781,15 +789,15 @@ def addtocart(request):
             iproprice = int(prodprice)
             iquan = int(qtybox)
             finalproprice = iproprice * iquan
-            print("check1")
+            if iquan > 0:
+                cartdata = product_cart(Product_id=product_detail(id=proid), L_id=login_table(id=uid),
+                                        Product_name=proname,
+                                        Price=iproprice, Quantity=iquan, Final_price=finalproprice)
+                cartdata.save()
 
-            cartdata = product_cart(Product_id=product_detail(id=proid), L_id=login_table(id=uid),
-                                    Product_name=proname,
-                                    Price=iproprice, Quantity=iquan, Final_price=finalproprice)
-            print("check2")
-            cartdata.save()
-
-            messages.success(request, 'Product added to cart')
+                messages.success(request, 'Product added to cart')
+            else:
+                messages.error(request, "Quantity can't be zero")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             messages.error(request, 'error occured while adding product')
@@ -901,7 +909,7 @@ def placeorder(request):
 
             print(lasstid)
 
-            objid = lasstid.id
+            objid = lasstid.id # type: ignore
             print(objid)
 
             obj = product_cart.objects.filter(L_id=login_table(id=uid), Order_status=0)
@@ -923,7 +931,7 @@ def placeorder(request):
 
             print(lasstid)
 
-            objid = lasstid.id
+            objid = lasstid.id # type: ignore
             print(objid)
 
             obj = product_cart.objects.filter(L_id=login_table(id=uid), Order_status=0)
@@ -1111,4 +1119,16 @@ def hamperfeedback(request):
         hfeedback.save()
         messages.info(request, 'Feedback Received Successfully.')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def Review(request, p_id):
+    if request.method == 'POST':
+     r_name =request.POST.get("review_name")
+     cmnt = request.POST.get("cmnt")
+     rating = request.POST.get("hidden-rating")
+     f_image = request.FILES['f_image']
+
+    insertdata=product_review(review_name=r_name,user_id=login_table(request.session['log_id']),p_id=product_detail(id=p_id),comment=cmnt,rating=rating, rev_image = f_image)
+    insertdata.save()
+    
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

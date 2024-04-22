@@ -114,3 +114,12 @@ class hamper_feedback(models.Model):
     Hamper_id = models.ForeignKey(hamper_details, on_delete=models.CASCADE, default="")
     COMMENT = models.CharField(max_length=300, default="")
     Date_time = models.DateTimeField(auto_now=True, editable=False)
+
+class product_review(models.Model):
+    review_name = models.CharField(max_length=150, default='Default Review Name')
+    user_id = models.ForeignKey(login_table, on_delete=models.CASCADE)
+    p_id = models.ForeignKey(product_detail, on_delete=models.CASCADE)
+    comment=models.TextField()
+    rating=models.IntegerField()
+    rev_image = models.ImageField(default='')
+    submit_on = models.DateTimeField(auto_now=True)

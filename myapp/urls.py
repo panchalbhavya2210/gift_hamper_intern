@@ -43,4 +43,5 @@ urlpatterns = [
    path("hamperorders", views.hamperorders, name="hamperorders"),
    path("placeorders", views.placeorders, name="placeorders"),
    path("submitreview", views.SubmitReview, name="submitreview"),
+   path("submitProdRating/<int:p_id>", views.Review, name="submit_rate")
 ]
